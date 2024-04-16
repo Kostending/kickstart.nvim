@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -289,6 +289,19 @@ require('lazy').setup({
       }
     end,
   },
+  -- {
+  --   'nvim-neo-tree/neo-tree.nvim',
+  --   branch = 'v3.x',
+  --   dependencies = {
+  --     'nvim-lua/plenary.nvim',
+  --     'nvim-tree/nvim-web-devicons',
+  --     'MunifTanjim/nui.nvim',
+  --   },
+  --   config = function()
+  --     vim.keymap.set('n', '<C-n>', ':Neotree filesystem reveal left<CR>', {})
+  --     vim.keymap.set('n', '<leader>bf', ':Neotree buffers reveal float<CR>', {})
+  --   end,
+  -- },
 
   -- NOTE: Plugins can specify dependencies.
   --
@@ -539,7 +552,6 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -548,7 +560,6 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
         --
 
         lua_ls = {
@@ -562,6 +573,59 @@ require('lazy').setup({
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
+            },
+          },
+        },
+        svelte = {
+          settings = {
+            svelte = {
+              plugin = {
+                html = {
+                  completions = {
+                    enable = true,
+                    emmet = true,
+                  },
+                },
+              },
+            },
+          },
+        },
+        golangci_lint_ls = {
+          settings = {
+            golangciLint = {
+              run = 'onSave',
+              timeout = '10s',
+            },
+          },
+        },
+        gopls = {
+          settings = {
+            gopls = {
+              analyses = {
+                unusedparams = true,
+              },
+              staticcheck = true,
+            },
+          },
+        },
+        pyre = {
+          settings = {
+            pyre = {
+              lint = {
+                enabled = true,
+              },
+            },
+          },
+        },
+        tsserver = {
+          settings = {
+            typescript = {
+              -- Disable tsserver formatting, as we use prettier
+              format = nil,
+            },
+            javascript = {
+              -- Disable tsserver formatting, as we use prettier
+              format = nil,
             },
           },
         },
@@ -615,11 +679,11 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
+        python = { 'isort', 'black' },
         --
         -- You can use a sub-list to tell conform to run *until* a formatter
         -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        javascript = { { 'prettierd', 'prettier' } },
       },
     },
   },
@@ -836,7 +900,7 @@ require('lazy').setup({
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
