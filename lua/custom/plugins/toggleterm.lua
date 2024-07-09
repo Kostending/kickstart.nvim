@@ -58,5 +58,28 @@ return {
     end
 
     vim.api.nvim_set_keymap('n', '<leader>k', '<cmd>lua _k9s_toggle()<CR>', { noremap = true, silent = true, desc = '[K]9s' })
+
+    local serpl = Terminal:new {
+      cmd = 'serpl',
+      direction = 'float',
+      float_opts = {
+        border = 'double',
+      },
+      -- function to run on opening the terminal
+      on_open = function(term)
+        vim.cmd 'startinsert!'
+        vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+      end,
+      -- function to run on closing the terminal
+      on_close = function()
+        vim.cmd 'startinsert!'
+      end,
+    }
+
+    function _serpl_toggle()
+      serpl:toggle()
+    end
+
+    vim.api.nvim_set_keymap('n', '<leader>sp', '<cmd>lua _serpl_toggle()<CR>', { noremap = true, silent = true, desc = '[S]erpl' })
   end,
 }
